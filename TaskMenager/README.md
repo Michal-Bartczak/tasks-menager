@@ -1,4 +1,4 @@
-       ###**MENAGER ZADAŃ**
+       ##MENAGER ZADAŃ
 *To prosty w obsłudze program, który
 przyda się każdemu, za jego pomocą:*
 1. Podejrzysz już istniejące zadania
