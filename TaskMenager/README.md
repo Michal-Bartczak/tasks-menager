@@ -9,6 +9,6 @@ przyda się każdemu, za jego pomocą:*
 są zawsze bezpieczne.
 Nawigacja odbywa się za pomocą
 wpisywania odpowiedniej liczby
-na klawiaturze.*
+na klawiaturze..*
 
 **POSTĘPUJ ZGODNIE ZE WSKAZÓWKAMI !!!**
