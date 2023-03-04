@@ -1,6 +1,9 @@
 package pl.coderslab;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -15,7 +18,16 @@ public class Main01 {
         // tworzymy metodę do pobierania danych z pliku
         String[] arrayBox = new String[0];
         String readLine = "";
-        arrayBox = readFile(arrayBox, readLine);
+        File source = new File("tasks.csv");
+        Path sourceA = Paths.get("tasks.csv");
+        if (!source.exists()) {
+            try {
+                Files.createFile(sourceA);
+            } catch (IOException e) {
+                System.out.println("Nie udało się utworzć pliku");
+            }
+        }
+        arrayBox = readFile(arrayBox, readLine, source);
         // wyświetlamy użytkownikowi możliwe opcje do wyboru(menu)
         boolean check = true;
         while (check == true) {
@@ -37,7 +49,7 @@ public class Main01 {
                     arrayBox = caseTwoView(tasks, task, scannerNavi, regexDataFormat, arrayBox);
                     break;
                 case 3:
-                    System.out.println(ConsoleColors.BLUE +"Wybrano opcję USUŃ ZADANIE"+ ConsoleColors.RESET);
+                    System.out.println(ConsoleColors.BLUE + "Wybrano opcję USUŃ ZADANIE" + ConsoleColors.RESET);
                     System.out.println("Wskaż które zadanie chcesz usunąć: ");
                     scannerNavi.nextLine();
                     int remove = 0;
@@ -48,7 +60,7 @@ public class Main01 {
                             System.out.println("Podaj liczbę !");
                         }
                         arrayBox = caseThreeView(remove, arrayBox, scannerNavi);
-                        System.out.println(ConsoleColors.BLUE+ "USUNIĘTO WYBRANE ZADANIE !"+ConsoleColors.RESET);
+                        System.out.println(ConsoleColors.BLUE + "USUNIĘTO WYBRANE ZADANIE !" + ConsoleColors.RESET);
                         break;
                     }
                     break;
@@ -62,9 +74,10 @@ public class Main01 {
             }
         }
     }
-    public static String[] readFile(String[] arrayBox, String readLine) {
 
-        File source = new File("tasks.csv");
+    public static String[] readFile(String[] arrayBox, String readLine, File source) {
+
+
         try (Scanner scannerToReadFile = new Scanner(source)) {
             while (scannerToReadFile.hasNextLine()) {
                 readLine = scannerToReadFile.nextLine();
@@ -86,17 +99,17 @@ public class Main01 {
         System.out.println("2. DODAJ  ZADANIE");
         System.out.println("3. USUŃ ZADANIE");
         System.out.println(ConsoleColors.GREEN + "4. POMOC" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.RED_BOLD + "5. WYJŚCIE"+ ConsoleColors.RESET);
+        System.out.println(ConsoleColors.RED_BOLD + "5. WYJŚCIE" + ConsoleColors.RESET);
     }
 
     public static void caseFirstView(String[] arrayBox) {
-        System.out.println(ConsoleColors.BLUE +"Wybrano opcje PODGLĄD ZADAŃ"+ ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "Wybrano opcje PODGLĄD ZADAŃ" + ConsoleColors.RESET);
         for (String line : arrayBox)
             System.out.println(line);
     }
 
     public static String[] caseTwoView(String[] tasks, String task, Scanner scannerNavi, String regexDataFormat, String[] arrayBox) {
-        System.out.println(ConsoleColors.BLUE +"Wybrano opcję DODAJ ZADANIE"+ ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "Wybrano opcję DODAJ ZADANIE" + ConsoleColors.RESET);
         System.out.println("Wpisz opis zadania które chcesz dopisać do listy");
         scannerNavi.nextLine();
         task = scannerNavi.nextLine();
@@ -118,7 +131,7 @@ public class Main01 {
         String join = String.join(", ", tasks);
         arrayBox = Arrays.copyOf(arrayBox, arrayBox.length + 1);
         arrayBox[arrayBox.length - 1] = join;
-        System.out.println(ConsoleColors.BLUE + "DODANO NOWE ZADANIE !"+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "DODANO NOWE ZADANIE !" + ConsoleColors.RESET);
         System.out.println(join);
         return arrayBox;
     }
@@ -153,7 +166,7 @@ public class Main01 {
     }
 
     public static void helpView() {
-        System.out.println(ConsoleColors.BLUE +"Wybrałeś opcję POMOC "+ ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "Wybrałeś opcję POMOC " + ConsoleColors.RESET);
         System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT +
                 "---MENAGER ZADAŃ---" + ConsoleColors.RESET + "\n" +
                 "Prosty program służący do zapisywania" + "\n" +
@@ -165,9 +178,9 @@ public class Main01 {
     }
 
     public static void writeToFile(Scanner scannerNavi, String[] arrayBox) {
-        System.out.println(ConsoleColors.RED_BOLD+ "Wybrałeś opcję WYJŚĆIE" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.RED_BOLD + "Wybrałeś opcję WYJŚĆIE" + ConsoleColors.RESET);
 
-        System.out.println(ConsoleColors.BLUE+ "DO ZOBACZENIA WKRÓTCE :)"+ ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "DO ZOBACZENIA WKRÓTCE :)" + ConsoleColors.RESET);
         scannerNavi.close();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.csv"))) {
             for (String element : arrayBox) {
